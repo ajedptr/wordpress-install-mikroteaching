@@ -1,0 +1,37 @@
+version: '3.7'
+
+
+services:
+  wordpress:
+    image: wordpress:latest
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ajedptri_wp
+      WORDPRESS_DB_USER: ajeuser
+      WORDPRESS_DB_PASSWORD: ajedptripass
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - wordpress_network
+
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: raje11
+      MYSQL_DATABASE: ajedptri_wp
+      MYSQL_USER: ajeuser
+      MYSQL_PASSWORD: ajedptripass
+    networks:
+      - wordpress_network
+
+volumes:
+  wordpress_data:
+
+networks:
+  wordpress_network:
+    driver: bridge
